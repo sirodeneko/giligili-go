@@ -37,7 +37,7 @@ func (service *UserRegisterService) Valid() *serializer.Response {
 	if count > 0 {
 		return &serializer.Response{
 			Status: 40001,
-			Msg:    "用户名已经注册",
+			Msg:    "用户账号已经注册",
 		}
 	}
 

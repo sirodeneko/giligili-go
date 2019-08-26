@@ -32,6 +32,10 @@ func NewRouter() *gin.Engine {
 		// 用户注册
 		v1.POST("user/register", api.UserRegister)
 
+		//头像上传
+		v1.POST("upload/token", api.UploadToken)
+		//视频上传
+		v1.POST("upload/tack", api.UploadTack)
 		// 用户登录
 		v1.POST("user/login", api.UserLogin)
 
@@ -47,10 +51,7 @@ func NewRouter() *gin.Engine {
 			v1.PUT("video/:id", api.UpdateVideo)
 			//删除食品
 			v1.DELETE("video/:id", api.DeleteVideo)
-			//头像上传
-			v1.POST("upload/token", api.UploadToken)
-			//视频上传
-			v1.POST("upload/tack", api.UploadTack)
+		
 		}
 
 		//
