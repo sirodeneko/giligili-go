@@ -1,6 +1,8 @@
 package model
 
 import (
+	"time"
+
 	"github.com/jinzhu/gorm"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -13,6 +15,9 @@ type User struct {
 	Nickname       string
 	Status         string
 	Avatar         string `gorm:"size:1000"`
+	Sxe            string
+	Birthday       time.Time
+	Sign           string
 }
 
 const (
