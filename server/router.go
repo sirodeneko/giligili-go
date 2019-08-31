@@ -54,6 +54,8 @@ func NewRouter() *gin.Engine {
 			v1.DELETE("video/:id", api.DeleteVideo)
 			//查询用户视频列表
 			v1.GET("user/videos", api.UserMeVideos)
+			//更新用户信息
+			v1.PUT("user/account", api.UserChange)
 		}
 
 		//

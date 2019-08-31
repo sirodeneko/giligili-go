@@ -61,3 +61,17 @@ func UserLogout(c *gin.Context) {
 		Msg:    "登出成功",
 	})
 }
+
+// UserChange 用户修改信息
+func UserChange(c *gin.Context) {
+	user := CurrentUser(c)
+	ID := user.ID
+	var service service.UserChangeService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.Change(ID)
+		c.JSON(200, res)
+
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
