@@ -44,6 +44,7 @@ func NewRouter() *gin.Engine {
 		{
 			// User Routing
 			v1.GET("user/me", api.UserMe)
+			//用户退出
 			v1.DELETE("user/logout", api.UserLogout)
 			//用户投稿
 			v1.POST("videos", api.CreateVideo)
