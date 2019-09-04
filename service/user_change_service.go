@@ -33,7 +33,9 @@ func (service *UserChangeService) Change(ID uint) serializer.Response {
 	user.Birthday = time.Unix(service.Birthday, 0)
 	user.Sex = service.Sex
 	user.Sign = service.Sign
-	user.Avatar = service.Avatar
+	if service.Avatar != "" {
+		user.Avatar = service.Avatar
+	}
 	err = model.DB.Save(&user).Error
 	if err != nil {
 		return serializer.Response{
