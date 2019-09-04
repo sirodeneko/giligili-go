@@ -13,20 +13,22 @@ type Video struct {
 	CreatedAt int64  `json:"created_at"`
 	Avatar    string `json:"avatar"`
 	View      uint64 `json:"view"`
-	User      User   `json:"user"`
+	User      uint   `json:"user"`
+	//User      User   `json:"user"`
 }
 
 // BuildVideo 序列化视频
 func BuildVideo(item model.Video) Video {
-	user, _ := model.GetUser(item.UserID)
+	//user, _ := model.GetUser(item.UserID)
 	return Video{
-		ID:        item.ID,
-		Title:     item.Title,
-		Info:      item.Info,
-		URL:       item.VideoURL(),
-		Avatar:    item.AvatarURL(),
-		View:      item.View(),
-		User:      BuildUser(user),
+		ID:     item.ID,
+		Title:  item.Title,
+		Info:   item.Info,
+		URL:    item.VideoURL(),
+		Avatar: item.AvatarURL(),
+		View:   item.View(),
+		//User:      BuildUser(user),
+		User:      item.UserID,
 		CreatedAt: item.CreatedAt.Unix(), //time.Time转换为int64（时间戳）
 
 	}

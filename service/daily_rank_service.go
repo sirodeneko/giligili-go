@@ -16,8 +16,8 @@ type DailyRankService struct {
 func (service *DailyRankService) Get() serializer.Response {
 	var videos []model.Video
 
-	// 从redis读取点击前十的视频
-	vids, _ := cache.RedisClient.ZRevRange(cache.DailyRankKey, 0, 9).Result()
+	// 从redis读取点击前6的视频
+	vids, _ := cache.RedisClient.ZRevRange(cache.DailyRankKey, 0, 5).Result()
 
 	if len(vids) > 1 {
 		order := fmt.Sprintf("FIELD(id, %s)", strings.Join(vids, ","))
