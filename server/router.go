@@ -25,6 +25,8 @@ func NewRouter() *gin.Engine {
 
 		//视频详情
 		v1.GET("video/:id", api.ShowVideo)
+		//用户详情
+		v1.GET("users/:id", api.ShowUser)
 		//查询视频列表
 		v1.GET("videos", api.ListVideo)
 		// 排行榜

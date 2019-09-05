@@ -75,3 +75,15 @@ func UserChange(c *gin.Context) {
 		c.JSON(200, ErrorResponse(err))
 	}
 }
+
+// ShowUser 查看固定id用户
+func ShowUser(c *gin.Context) {
+	service := service.ShowUserService{}
+	//c.ShouldBind(&service)将前端的数据绑定到结构体内
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.Show(c.Param("id"))
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
