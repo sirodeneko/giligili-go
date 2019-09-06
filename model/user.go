@@ -20,6 +20,7 @@ type User struct {
 	Sex            string
 	Birthday       time.Time
 	Sign           string
+	Upcnt          uint
 }
 
 const (

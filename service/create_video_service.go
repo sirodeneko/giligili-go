@@ -26,6 +26,23 @@ func (service *CreateVideoService) Create(user *model.User) serializer.Response 
 		Avatar: service.Avatar,
 		UserID: user.ID,
 	}
+	err := model.DB.First(&user, user.ID).Error
+	if err != nil {
+		return serializer.Response{
+			Status: 50002,
+			Msg:    "查询用户今日投稿数失败",
+			Error:  err.Error(),
+		}
+	}
+	if user.Upcnt >= 5 {
+		return serializer.Response{
+			Status: 50002,
+			Msg:    "今日投稿数已达上限",
+			Error:  err.Error(),
+		}
+	}
+
+	model.DB.Model(&user).Update("upcnt", (user.Upcnt)+1)
 	//判断是否上传了封面
 	if video.Avatar == "" {
 		return serializer.Response{

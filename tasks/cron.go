@@ -30,10 +30,10 @@ func CronJob() {
 	if Cron == nil {
 		Cron = cron.New()
 	}
-	//每年一次
+	//每年一次 更新排行榜
 	Cron.AddFunc("0 0 0 1 1 *", func() { Run(RestartDailyRank) })
-	//每日一次
-	//Cron.AddFunc("0 0 0 * * *", func() { Run(RestartDailyRank) })
+	//每日一次 更新投稿数
+	Cron.AddFunc("0 0 0 * * *", func() { Run(RestartPucnt) })
 	Cron.Start()
 
 	fmt.Println("Cronjob start.....")
