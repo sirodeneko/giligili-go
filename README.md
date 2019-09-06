@@ -1,6 +1,6 @@
 # Golang Fast CRUD
 
-## 项目地址[](http://www.xiaosiro.cn)
+## 项目地址[giligili](http://www.xiaosiro.cn)
 
 ## 目的
 
