@@ -42,7 +42,7 @@ func ListVideo(c *gin.Context) {
 func UserMeVideos(c *gin.Context) {
 	//获取用户信息
 	user := CurrentUser(c)
-	ID :=user.ID
+	ID := user.ID
 	service := service.UserMeVideosService{}
 	if err := c.ShouldBind(&service); err == nil {
 		res := service.List(ID)
@@ -66,7 +66,9 @@ func UpdateVideo(c *gin.Context) {
 
 // DeleteVideo 删除视频的接口
 func DeleteVideo(c *gin.Context) {
+	user := CurrentUser(c)
+	userid := user.ID
 	service := service.DeleteVideoService{}
-	res := service.Delete(c.Param("id"))
+	res := service.Delete(c.Param("id"), userid)
 	c.JSON(200, res)
 }

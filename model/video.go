@@ -59,3 +59,4 @@ func (video *Video) AddView() {
 	// 键名 加多少 成员(视频id)
 	cache.RedisClient.ZIncrBy(cache.DailyRankKey, 1, strconv.Itoa(int(video.ID)))
 }
+ 
