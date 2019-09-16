@@ -40,7 +40,8 @@ func NewRouter() *gin.Engine {
 		v1.POST("upload/tack", api.UploadTack)
 		// 用户登录
 		v1.POST("user/login", api.UserLogin)
-
+		//查询视频评论列表
+		v1.GET("videos/comments/:id", api.ListComment)
 		// 需要登录保护的
 		v1.Use(middleware.AuthRequired())
 		{
@@ -58,6 +59,10 @@ func NewRouter() *gin.Engine {
 			v1.GET("user/videos", api.UserMeVideos)
 			//更新用户信息
 			v1.PUT("user/account", api.UserChange)
+			//发表评论(视频id))
+			v1.POST("video/comment/:id", api.VideoComment)
+			//删除评论(评论id)
+			v1.DELETE("comment/:id", api.DeleteComment)
 		}
 
 		//

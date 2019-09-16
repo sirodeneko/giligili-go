@@ -85,9 +85,12 @@ func DeleteVideo(video model.Video) error {
 	if err != nil {
 		return err
 	}
-	err = bucket.DeleteObject(video.Avatar)
+	err = bucket.DeleteObject(video.URL)
 	if err != nil {
 		return err
 	}
+
+	//处理视频被删除后的问题
+	video.DeleteVideo()
 	return nil
 }
