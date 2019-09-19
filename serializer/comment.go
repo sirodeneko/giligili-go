@@ -8,6 +8,8 @@ import (
 type Comment struct {
 	ID        uint   `json:"id"`
 	UserID    uint   `json:"uid"`
+	UserURL   string `json:"user_url"`
+	UserName  string `json:"user_name"`
 	Txet      string `json:"txet"`
 	Like      uint32 `json:"like"`
 	CreatedAt int64  `json:"created_at"`
@@ -21,9 +23,12 @@ func BuildComment(item model.Comment, uid uint) Comment {
 	if uid == item.UserID || uid == 1 {
 		flog = 1
 	}
+	UserURL, UserName := item.GetUserURL()
 	return Comment{
 		ID:        item.ID,
 		UserID:    item.UserID,
+		UserURL:   UserURL,
+		UserName:  UserName,
 		Txet:      item.Txet,
 		Like:      item.Like,
 		Me:        flog,

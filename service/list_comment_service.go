@@ -20,7 +20,7 @@ func (service *ListCommentService) List(id string, uid uint) serializer.Response
 		service.Limit = 20
 	}
 
-	if err := model.DB.Model(model.Comment{}).Count(&total).Error; err != nil {
+	if err := model.DB.Where("video_id = ?", id).Model(model.Comment{}).Count(&total).Error; err != nil {
 		return serializer.Response{
 			Status: 50000,
 			Msg:    "数据库连接错误",

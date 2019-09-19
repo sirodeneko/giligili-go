@@ -7,4 +7,8 @@ func migration() {
 	DB.AutoMigrate(&User{})
 	DB.AutoMigrate(&Video{})
 	DB.AutoMigrate(&Comment{})
+	DB.AutoMigrate(&VideoLike{})
+	//创建外键
+	DB.Model(&VideoLike{}).AddForeignKey("video_id", "videos(id)", "RESTRICT", "RESTRICT")
+	DB.Model(&VideoLike{}).AddForeignKey("user_id", "users(id)", "RESTRICT", "RESTRICT")
 }
