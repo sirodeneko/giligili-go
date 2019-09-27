@@ -21,9 +21,15 @@ func VideoComment(c *gin.Context) {
 // ListComment 视频列表详情接口
 func ListComment(c *gin.Context) {
 	service := service.ListCommentService{}
+	var ID uint
+	if CurrentUser(c)!=nil{
+		ID=CurrentUser(c).ID
+	}else{
+		ID=0
+	}
 	//c.ShouldBind(&service)将前端的数据绑定到结构体内
 	if err := c.ShouldBind(&service); err == nil {
-		res := service.List(c.Param("id"),CurrentUser(c).ID)
+		res := service.List(c.Param("id"),ID)
 		c.JSON(200, res)
 	} else {
 		c.JSON(200, ErrorResponse(err))
