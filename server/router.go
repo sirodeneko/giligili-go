@@ -6,18 +6,19 @@ import (
 	"os"
 
 	"github.com/gin-gonic/gin"
+	"gopkg.in/olahol/melody.v1"
 )
 
 // NewRouter 路由配置
 func NewRouter() *gin.Engine {
 	r := gin.Default()
-
+	// websocket连接
+	m := melody.New()
 	// 中间件, 顺序不能改
 	r.Use(middleware.Session(os.Getenv("SESSION_SECRET")))
 	r.Use(middleware.Cors()) //跨域
 	// 获取用户身份
 	r.Use(middleware.CurrentUser())
-
 	// 路由
 	v1 := r.Group("/api/v1")
 	{
@@ -64,8 +65,23 @@ func NewRouter() *gin.Engine {
 			//删除评论(评论id)
 			v1.DELETE("comment/:id", api.DeleteComment)
 		}
+		ws := v1.Group("")
+		{
+			//http升级为websocket
+			ws.GET("/ws", func(c *gin.Context) {
+				m.HandleRequest(c.Writer, c.Request)
+			})
+			//当接收到消息
+			m.HandleMessage(func(s *melody.Session, msg []byte) {
+				//向所有人广播
+				m.Broadcast(msg)
+			})
+			//当发出消息
+			m.HandleSentMessage(func(s *melody.Session, msg []byte) {
+				//s.Write([]byte("hiwsbfabu"))
+			})
 
-		//
+		}
 
 	}
 	return r
