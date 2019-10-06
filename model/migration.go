@@ -11,7 +11,7 @@ func migration() {
 	DB.AutoMigrate(&Group{})
 	DB.AutoMigrate(&GroupUser{})
 	DB.AutoMigrate(&Chat{})
-	DB.AutoMigrate(&Contact{})
+	//DB.AutoMigrate(&Contact{})
 
 	//创建外键
 	DB.Model(&VideoLike{}).AddForeignKey("video_id", "videos(id)", "RESTRICT", "RESTRICT")

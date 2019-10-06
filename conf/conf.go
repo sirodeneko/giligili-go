@@ -2,6 +2,7 @@ package conf
 
 import (
 	"giligili/cache"
+	"giligili/im"
 	"giligili/model"
 	"giligili/tasks"
 	"os"
@@ -28,4 +29,7 @@ func Init() {
 
 	// 启动定时任务
 	tasks.CronJob()
+
+	// 初始化聊天室
+	im.RoomLoding()
 }

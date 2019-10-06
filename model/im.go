@@ -1,6 +1,10 @@
 package model
 
 import (
+	"os"
+	"strings"
+
+	"github.com/aliyun/aliyun-oss-go-sdk/oss"
 	"github.com/jinzhu/gorm"
 )
 
@@ -24,8 +28,9 @@ type Group struct {
 
 // GroupUser 聊天室成员
 type GroupUser struct {
-	ID        uint   `gorm:"primary_key"` //聊天室id
-	UserID    uint   //成员id
+	gorm.Model
+	GroupID   uint   `gorm:"index"` //聊天室id
+	UserID    uint   `gorm:"index"` //成员id
 	GroupRole string //角色
 }
 
@@ -33,17 +38,20 @@ type GroupUser struct {
 type Chat struct {
 	gorm.Model
 	UserID     uint   //发送人id
-	IsMe       uint   //是否是自己发送的
 	FromAvatar string `gorm:"size:1000"` //发送人头像
 	FromName   string //发送者名称
-	To         uint   //接受者
+	To         uint   //接受聊天室
 	MsgType    uint   // 消息类型 1: 文本 2：图片
 	Msg        string `gorm:"size:1000"` //内容
 }
 
-// Contact 群列表
-type Contact struct {
-	gorm.Model
-	UserID     uint   //所属人id
-	GroupID uint //群id
+// AvatarURL 封面地址
+func (group *Group) AvatarURL() string {
+	client, _ := oss.New(os.Getenv("OSS_END_POINT"), os.Getenv("OSS_ACCESS_KEY_ID"), os.Getenv("OSS_ACCESS_KEY_SECRET"))
+	bucket, _ := client.Bucket(os.Getenv("OSS_BUCKET"))
+	signedGetURL, _ := bucket.SignURL(group.GroupAvatar, oss.HTTPGet, 60)
+	if strings.Contains(signedGetURL, "http://giligili-img-av.oss-cn-hangzhou.aliyuncs.com/?Exp") {
+		signedGetURL = "https://giligili-img-av.oss-cn-hangzhou.aliyuncs.com/img/noface.png"
+	}
+	return signedGetURL
 }

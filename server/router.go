@@ -64,6 +64,8 @@ func NewRouter() *gin.Engine {
 			v1.POST("video/comment/:id", api.VideoComment)
 			//删除评论(评论id)
 			v1.DELETE("comment/:id", api.DeleteComment)
+			//获取聊天室
+			v1.GET("user/groups", api.GetMyGroups)
 		}
 		ws := v1.Group("")
 		{
