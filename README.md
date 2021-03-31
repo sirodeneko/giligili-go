@@ -20,8 +20,15 @@
 8. 本项目是使用基于cookie实现的session来保存登录状态的，如果需要可以自行修改为token验证
 
 本项目已经实现了一些功能:
-1.用户系统
-2.视频上传播放评论
+1. 用户系统
+2. 视频上传
+3. 视频播放（跨域控制）
+4. 图片上传
+5. 图片下载（跨域控制）
+6. 视频评论
+7. 播放量记录
+8. 热点视频排行榜
+9. 简陋聊天室
 
 
 本项目已经预先创建了一系列文件夹划分出下列模块:
@@ -50,12 +57,11 @@ GIN_MODE="debug"
 
 ## Go 依赖
 
-本项目使用[govendor](https://github.com/kardianos/govendor)管理依赖，以上描述的依赖已经提交到仓库之中。
-下面是你想后期修改依赖的准备工作
-
-```shell
-go get -u github.com/kardianos/govendor
-govendor init
+本项目使用[go mod]管理依赖，可自己运行项目，go mod会自动下载依赖
+如果包下载失败，请运行
+```.env
+go env -w GOPROXY=https://goproxy.io,direct
+go mod download
 ```
 
 ## 运行
