@@ -1,7 +1,7 @@
 package serializer
 
 import (
-	"giligili/model"
+	"github.com/sirodeneko/giligili-go/model"
 )
 
 // Group 聊天室序列化器
@@ -22,8 +22,8 @@ func BuildGroup(item model.Group) Group {
 	return Group{
 		ID:            item.ID,
 		UserID:        item.UserID,
-		GroupName:     item.GroupName,
 		GroupType:     item.GroupType,
+		GroupName:     item.GroupName,
 		GroupAvatar:   item.AvatarURL(),
 		GroupIntrduce: item.GroupIntrduce,
 		LastID:        item.LastID,
@@ -38,8 +38,47 @@ func BuildGroups(items []model.Group) []Group {
 
 	for _, item := range items {
 		group := BuildGroup(item)
-		//把video给videos然后赋给videos 因为不是传指针（ps:有点傻逼）
 		groups = append(groups, group)
 	}
 	return groups
+}
+
+// Chat 返回聊天消息序列化器
+type Chat struct {
+	ID         uint   `json:"id"`
+	UserID     uint   `json:"userID"` //创建人id
+	CreatedAt  int64  `json:"created_at"`
+	FromAvatar string `json:"from_avatar"`
+	FromName   string `json:"from_name"`
+	To         uint   `json:"to"`
+	MsgType    uint   `json:"msg_type"`
+	Msg        string `json:"msg"`
+}
+
+// BuildChat 序列化返回聊天消息
+func BuildChat(item model.Chat) Chat {
+	if item.MsgType == 2 {
+		item.Msg = model.AvatarURL(item.Msg)
+	}
+	return Chat{
+		ID:         item.ID,
+		UserID:     item.UserID,
+		CreatedAt:  item.CreatedAt.Unix(),
+		FromAvatar: model.AvatarURL(item.FromAvatar),
+		FromName:   item.FromName,
+		To:         item.ToGroup,
+		MsgType:    item.MsgType,
+		Msg:        item.Msg,
+	}
+}
+
+// BuildChats 序列化聊天室消息列表
+func BuildChats(items []model.Chat) []Chat {
+	var chats []Chat
+
+	for _, item := range items {
+		group := BuildChat(item)
+		chats = append(chats, group)
+	}
+	return chats
 }

@@ -1,10 +1,15 @@
 package service
 
 import (
-	"giligili/model"
-	"giligili/serializer"
+	"os"
+	"strings"
+
+	"github.com/sirodeneko/giligili-go/model"
+	"github.com/sirodeneko/giligili-go/serializer"
 
 	"time"
+
+	"github.com/aliyun/aliyun-oss-go-sdk/oss"
 )
 
 // UserChangeService 用户修改信息的服务
@@ -33,7 +38,38 @@ func (service *UserChangeService) Change(ID uint) serializer.Response {
 	user.Birthday = time.Unix(service.Birthday, 0)
 	user.Sex = service.Sex
 	user.Sign = service.Sign
-	if service.Avatar != "" {
+	//如果更新了图片
+	if !strings.Contains(service.Avatar, "upload/avatars") {
+		//将头像，文件夹拷到文件夹
+		client, err := oss.New(os.Getenv("OSS_END_POINT"), os.Getenv("OSS_ACCESS_KEY_ID"), os.Getenv("OSS_ACCESS_KEY_SECRET"))
+		if err != nil {
+			return serializer.Response{
+				Status: 50002,
+				Msg:    "OSS配置错误1",
+				Error:  err.Error(),
+			}
+		}
+
+		// 获取存储空间。
+		bucket, err := client.Bucket(os.Getenv("OSS_BUCKET"))
+		if err != nil {
+			return serializer.Response{
+				Status: 50002,
+				Msg:    "OSS配置错误2",
+				Error:  err.Error(),
+			}
+		}
+
+		key1 := "upload/avatars/" + service.Avatar[14:len(service.Avatar)]
+		_, err = bucket.CopyObject(service.Avatar, key1)
+		if err != nil {
+			return serializer.Response{
+				Status: 50002,
+				Msg:    "OSS配置错误3",
+				Error:  err.Error(),
+			}
+		}
+		service.Avatar = key1
 		user.Avatar = service.Avatar
 	}
 	err = model.DB.Save(&user).Error

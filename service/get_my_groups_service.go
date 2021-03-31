@@ -1,8 +1,11 @@
 package service
 
 import (
-	"giligili/model"
-	"giligili/serializer"
+	"sort"
+
+	"github.com/sirodeneko/giligili-go/serializer"
+
+	"github.com/sirodeneko/giligili-go/model"
 )
 
 // GetMyGroupsService 聊天室列表服务
@@ -32,5 +35,12 @@ func ListGroups(GroupUsers []model.GroupUser) []model.Group {
 		model.DB.Where("id=?", item.GroupID).Find(&group)
 		groups = append(groups, group)
 	}
+	sort.Sort(ByGrouplastID(groups))
 	return groups
 }
+
+type ByGrouplastID []model.Group
+
+func (a ByGrouplastID) Len() int           { return len(a) }
+func (a ByGrouplastID) Less(i, j int) bool { return a[i].LastID > a[j].LastID }
+func (a ByGrouplastID) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }

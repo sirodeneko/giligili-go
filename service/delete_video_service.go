@@ -3,8 +3,8 @@ package service
 import (
 	"os"
 
-	"giligili/model"
-	"giligili/serializer"
+	"github.com/sirodeneko/giligili-go/model"
+	"github.com/sirodeneko/giligili-go/serializer"
 
 	"github.com/aliyun/aliyun-oss-go-sdk/oss"
 )
@@ -27,7 +27,7 @@ func (service *DeleteVideoService) Delete(id string, userid uint) serializer.Res
 	if userid != video.UserID {
 		if userid != 1 {
 			return serializer.Response{
-				Status: 404,
+				Status: 403,
 				Msg:    "没有权限删除",
 			}
 		}

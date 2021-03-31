@@ -1,8 +1,8 @@
 package middleware
 
 import (
-	"giligili/model"
-	"giligili/serializer"
+	"github.com/sirodeneko/giligili-go/model"
+	"github.com/sirodeneko/giligili-go/serializer"
 
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"

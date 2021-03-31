@@ -1,9 +1,11 @@
 package server
 
 import (
-	"giligili/api"
-	"giligili/middleware"
 	"os"
+
+	"github.com/sirodeneko/giligili-go/api"
+	"github.com/sirodeneko/giligili-go/im"
+	"github.com/sirodeneko/giligili-go/middleware"
 
 	"github.com/gin-gonic/gin"
 	"gopkg.in/olahol/melody.v1"
@@ -66,21 +68,29 @@ func NewRouter() *gin.Engine {
 			v1.DELETE("comment/:id", api.DeleteComment)
 			//获取聊天室
 			v1.GET("user/groups", api.GetMyGroups)
+			//创建聊天室
+			v1.POST("group/create", api.GroupCreate)
+			//加入聊天室
+			v1.POST("group/join", api.GroupJoin)
+			//拉取聊天信息
+			v1.GET("group/msgs/:id", api.GroupMsgs)
 		}
 		ws := v1.Group("")
 		{
 			//http升级为websocket
 			ws.GET("/ws", func(c *gin.Context) {
-				m.HandleRequest(c.Writer, c.Request)
+				err := m.HandleRequest(c.Writer, c.Request)
+				if err != nil {
+					c.JSON(200, err)
+				}
 			})
 			//当接收到消息
 			m.HandleMessage(func(s *melody.Session, msg []byte) {
-				//向所有人广播
-				m.Broadcast(msg)
+				api.Select(msg, s)
 			})
-			//当发出消息
-			m.HandleSentMessage(func(s *melody.Session, msg []byte) {
-				//s.Write([]byte("hiwsbfabu"))
+			//当断开连接
+			m.HandleDisconnect(func(s *melody.Session) {
+				im.Exit(s)
 			})
 
 		}

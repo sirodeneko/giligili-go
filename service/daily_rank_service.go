@@ -2,10 +2,11 @@ package service
 
 import (
 	"fmt"
-	"giligili/cache"
-	"giligili/model"
-	"giligili/serializer"
 	"strings"
+
+	"github.com/sirodeneko/giligili-go/cache"
+	"github.com/sirodeneko/giligili-go/model"
+	"github.com/sirodeneko/giligili-go/serializer"
 )
 
 // DailyRankService 每日排行的服务

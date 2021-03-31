@@ -1,6 +1,6 @@
 package serializer
 
-import "giligili/model"
+import "github.com/sirodeneko/giligili-go/model"
 
 // User 用户序列化器
 type User struct {

@@ -1,7 +1,7 @@
 package api
 
 import (
-	"giligili/service"
+	"github.com/sirodeneko/giligili-go/service"
 
 	"github.com/gin-gonic/gin"
 )

@@ -1,8 +1,9 @@
 package service
 
 import (
-	"giligili/serializer"
 	"os"
+
+	"github.com/sirodeneko/giligili-go/serializer"
 
 	"github.com/aliyun/aliyun-oss-go-sdk/oss"
 	"github.com/google/uuid"

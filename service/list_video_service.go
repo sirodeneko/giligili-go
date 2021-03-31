@@ -1,8 +1,8 @@
 package service
 
 import (
-	"giligili/model"
-	"giligili/serializer"
+	"github.com/sirodeneko/giligili-go/model"
+	"github.com/sirodeneko/giligili-go/serializer"
 )
 
 // ListVideoService 视频列表服务

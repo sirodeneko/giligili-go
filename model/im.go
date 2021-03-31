@@ -13,6 +13,8 @@ const (
 	Master string = "master"
 	// Administrator 管理员
 	Administrator string = "administrator"
+	// Common 普通群员
+	Common = "common"
 )
 
 // Group 聊天室
@@ -40,7 +42,7 @@ type Chat struct {
 	UserID     uint   //发送人id
 	FromAvatar string `gorm:"size:1000"` //发送人头像
 	FromName   string //发送者名称
-	To         uint   //接受聊天室
+	ToGroup    uint   `gorm:"index"` //接受聊天室
 	MsgType    uint   // 消息类型 1: 文本 2：图片
 	Msg        string `gorm:"size:1000"` //内容
 }
@@ -50,6 +52,17 @@ func (group *Group) AvatarURL() string {
 	client, _ := oss.New(os.Getenv("OSS_END_POINT"), os.Getenv("OSS_ACCESS_KEY_ID"), os.Getenv("OSS_ACCESS_KEY_SECRET"))
 	bucket, _ := client.Bucket(os.Getenv("OSS_BUCKET"))
 	signedGetURL, _ := bucket.SignURL(group.GroupAvatar, oss.HTTPGet, 60)
+	if strings.Contains(signedGetURL, "http://giligili-img-av.oss-cn-hangzhou.aliyuncs.com/?Exp") {
+		signedGetURL = "https://giligili-img-av.oss-cn-hangzhou.aliyuncs.com/img/noface.png"
+	}
+	return signedGetURL
+}
+
+// AvatarURL 封面地址
+func AvatarURL(url string) string {
+	client, _ := oss.New(os.Getenv("OSS_END_POINT"), os.Getenv("OSS_ACCESS_KEY_ID"), os.Getenv("OSS_ACCESS_KEY_SECRET"))
+	bucket, _ := client.Bucket(os.Getenv("OSS_BUCKET"))
+	signedGetURL, _ := bucket.SignURL(url, oss.HTTPGet, 60)
 	if strings.Contains(signedGetURL, "http://giligili-img-av.oss-cn-hangzhou.aliyuncs.com/?Exp") {
 		signedGetURL = "https://giligili-img-av.oss-cn-hangzhou.aliyuncs.com/img/noface.png"
 	}

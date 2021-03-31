@@ -1,10 +1,11 @@
 package service
 
 import (
-	"giligili/serializer"
 	"mime"
 	"os"
 	"path/filepath"
+
+	"github.com/sirodeneko/giligili-go/serializer"
 
 	"github.com/aliyun/aliyun-oss-go-sdk/oss"
 	"github.com/google/uuid"

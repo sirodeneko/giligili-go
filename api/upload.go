@@ -1,7 +1,7 @@
 package api
 
 import (
-	"giligili/service"
+	"github.com/sirodeneko/giligili-go/service"
 
 	"github.com/gin-gonic/gin"
 )
@@ -16,6 +16,7 @@ func UploadToken(c *gin.Context) {
 		c.JSON(200, ErrorResponse(err))
 	}
 }
+
 // UploadTack 视频上传授权
 func UploadTack(c *gin.Context) {
 	service := service.UploadTackService{}

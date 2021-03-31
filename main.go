@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"giligili/conf"
-	"giligili/server"
+
+	"github.com/sirodeneko/giligili-go/conf"
+	"github.com/sirodeneko/giligili-go/server"
 )
 
 func main() {

@@ -1,10 +1,11 @@
 package model
 
 import (
-	"giligili/cache"
 	"os"
 	"strconv"
 	"strings"
+
+	"github.com/sirodeneko/giligili-go/cache"
 
 	"github.com/aliyun/aliyun-oss-go-sdk/oss"
 	"github.com/jinzhu/gorm"

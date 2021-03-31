@@ -1,8 +1,8 @@
 package service
 
 import (
-	"giligili/model"
-	"giligili/serializer"
+	"github.com/sirodeneko/giligili-go/model"
+	"github.com/sirodeneko/giligili-go/serializer"
 )
 
 // UserMeVideosService 用户视频列表服务
@@ -28,7 +28,7 @@ func (service *UserMeVideosService) List(ID uint) serializer.Response {
 		}
 	}
 
-	if err := model.DB.Where("user_id = ?", ID).Limit(service.Limit).Offset(service.Start).Find(&videos).Error; err != nil {
+	if err := model.DB.Order("id desc").Where("user_id = ?", ID).Limit(service.Limit).Offset(service.Start).Find(&videos).Error; err != nil {
 		return serializer.Response{
 			Status: 50000,
 			Msg:    "数据库连接错误",

@@ -1,8 +1,8 @@
 package service
 
 import (
-	"giligili/model"
-	"giligili/serializer"
+	"github.com/sirodeneko/giligili-go/model"
+	"github.com/sirodeneko/giligili-go/serializer"
 )
 
 // UserRegisterService 管理用户注册服务

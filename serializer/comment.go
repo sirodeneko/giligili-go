@@ -1,7 +1,7 @@
 package serializer
 
 import (
-	"giligili/model"
+	"github.com/sirodeneko/giligili-go/model"
 )
 
 // Comment 视频评论序列化器
