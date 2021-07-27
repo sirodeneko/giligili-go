@@ -9,7 +9,7 @@ require (
 	github.com/erikstmartin/go-testdb v0.0.0-20160219214506-8d10e4a1bae5 // indirect
 	github.com/gin-contrib/cors v0.0.0-20180828005559-6653abe07894
 	github.com/gin-contrib/sessions v0.0.0-20180724132311-854e10e72056
-	github.com/gin-gonic/gin v1.3.1-0.20180919055700-07f1bf0e6351
+	github.com/gin-gonic/gin v1.7.0
 	github.com/go-redis/redis v6.14.1+incompatible
 	github.com/go-sql-driver/mysql v1.4.1-0.20180719071942-99ff426eb706 // indirect
 	github.com/google/uuid v1.2.0
